@@ -1,4 +1,7 @@
+# This function creates a special "matrix" object that can cache its inverse.
+
 makeCacheMatrix <- function(x = matrix()) {
+  # set the default inverse for x
   x_inv <- NULL
   if(ncol(x) != nrow(x)) {
     stop("Not a square matrix!")
@@ -14,6 +17,8 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
+# This function computes the inverse of the special "matrix" returned by makeCacheMatrix above. 
+# If the inverse has already been calculated (and the matrix has not changed), then the cachesolve should retrieve the inverse from the cache.
 
 cacheSolve <- function(x, ...) {
   x_inv <- x$getinv()
@@ -22,6 +27,7 @@ cacheSolve <- function(x, ...) {
     return(x_inv)
   }
   data <- x$get()
+  # calculate the inverse of x
   x_inv <- solve(data, ...)
   x$setinv(x_inv)
   x_inv
